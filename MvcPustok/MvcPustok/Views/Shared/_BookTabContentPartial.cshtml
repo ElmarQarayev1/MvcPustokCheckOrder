@@ -36,9 +36,9 @@
                             </a>
                             <div class="hover-btns">
 
-                                <form asp-controller="home" asp-action="addbasket" asp-route-id="@item.Id" method="post">
-                                    <button type="submit" class="single-btn"><i class="fas fa-heart"></i></button>
-                                </form>
+                                <a asp-controller="book" asp-action="addtobasket" asp-route-bookId="@item.Id" class="single-btn">
+                                    <i class="fas fa-shopping-basket"></i>
+                                </a>
                                 <a href="wishlist.html" class="single-btn">
                                     <i class="fas fa-heart"></i>
                                 </a>

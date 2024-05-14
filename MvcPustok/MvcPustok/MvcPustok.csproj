@@ -31,7 +31,6 @@
     <None Remove="Areas\Manage\Views\Account\" />
     <None Remove="Views\Account\" />
     <None Remove="Views\Book\" />
-    <None Remove="Views\Basket\" />
     <None Remove="Models\Enum\" />
   </ItemGroup>
   <ItemGroup>
@@ -63,7 +62,6 @@
     <Folder Include="Areas\Manage\Views\Account\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Book\" />
-    <Folder Include="Views\Basket\" />
     <Folder Include="Models\Enum\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,7 @@
 ﻿<Properties StartupConfiguration="{838B4C8E-E59C-4E24-B508-A0358A019A2B}|https">
-  <MonoDevelop.Ide.ItemProperties.MvcPustok PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="MvcPustok/Views/Shared/_Layout.cshtml">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MvcPustok/Controllers/BookController.cs">
     <Files>
       <File FileName="MvcPustok/Program.cs" />
       <File FileName="MvcPustok/appsettings.json" />
@@ -25,8 +23,8 @@
       <File FileName="MvcPustok/ViewModels/HomeViewModel.cs" />
       <File FileName="MvcPustok/Models/Feature.cs" />
       <File FileName="MvcPustok/Views/Shared/_BookTabContentPartial.cshtml" />
-      <File FileName="MvcPustok/wwwroot/js/main.js" Line="24" Column="1" />
-      <File FileName="MvcPustok/Controllers/BookController.cs" Line="1" Column="1" />
+      <File FileName="MvcPustok/wwwroot/js/main.js" />
+      <File FileName="MvcPustok/Controllers/BookController.cs" Line="38" Column="10" />
       <File FileName="MvcPustok/Views/Shared/_Layout.cshtml.css" />
       <File FileName="MvcPustok/Services/LayoutService.cs" />
       <File FileName="MvcPustok/Models/Setting.cs" />
@@ -46,7 +44,7 @@
       <File FileName="MvcPustok/Areas/Manage/Controllers/SliderController.cs" />
       <File FileName="MvcPustok/Areas/Manage/Views/Slider/Index.cshtml" />
       <File FileName="MvcPustok/Areas/Manage/Views/Slider/Create.cshtml" />
-      <File FileName="MvcPustok/Areas/Manage/Controllers/BookController.cs" Line="287" Column="1" />
+      <File FileName="MvcPustok/Areas/Manage/Controllers/BookController.cs" />
       <File FileName="MvcPustok/Areas/Manage/Views/Book/Index.cshtml" />
       <File FileName="MvcPustok/Areas/Manage/Views/Dashboard/Index.cshtml" />
       <File FileName="MvcPustok/Areas/Manage/Views/Genre/Edit.cshtml" />
@@ -76,13 +74,13 @@
       <File FileName="MvcPustok/Areas/Manage/ViewModels/AdminLoginViewModel.cs" />
       <File FileName="MvcPustok/Areas/Manage/Views/Account/Login.cshtml" />
       <File FileName="MvcPustok/Views/Account/Register.cshtml" />
-      <File FileName="MvcPustok/Controllers/AccountController.cs" Line="181" Column="47" />
+      <File FileName="MvcPustok/Controllers/AccountController.cs" />
       <File FileName="MvcPustok/ViewModels/MemberRegisterViewModel.cs" />
       <File FileName="MvcPustok/Views/Account/Login.cshtml" />
       <File FileName="MvcPustok/ViewModels/MemberLoginViewModel.cs" />
       <File FileName="MvcPustok/ViewModels/ProfileViewModel.cs" />
       <File FileName="MvcPustok/ViewModels/ProfileEditViewModel.cs" />
-      <File FileName="MvcPustok/Views/Shared/_ProfileEditFormPartial.cshtml" Line="52" Column="8" />
+      <File FileName="MvcPustok/Views/Shared/_ProfileEditFormPartial.cshtml" />
       <File FileName="MvcPustok/Views/Shared/_ValidationScriptPartials.cshtml" />
       <File FileName="MvcPustok/Views/Account/Profile.cshtml" />
       <File FileName="MvcPustok/wwwroot/js/plugins.js" />
@@ -103,23 +101,13 @@
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="MvcPustok" expanded="True">
+          <Node name="MvcPustok">
             <Node name="MvcPustok">
-              <Node name="Areas">
-                <Node name="Manage">
-                  <Node name="Models" expanded="True" />
-                  <Node name="Views" expanded="True">
-                    <Node name="Book" expanded="True" />
-                  </Node>
-                </Node>
+              <Node name="Controllers" expanded="True">
+                <Node name="BookController.cs" selected="True" />
               </Node>
-              <Node name="Controllers" expanded="True" />
-              <Node name="Data" expanded="True" />
-              <Node name="Services" expanded="True" />
               <Node name="Views" expanded="True">
-                <Node name="Shared" expanded="True">
-                  <Node name="_Layout.cshtml" selected="True" />
-                </Node>
+                <Node name="Shared" expanded="True" />
               </Node>
               <Node name="wwwroot" expanded="True">
                 <Node name="js" expanded="True" />
@@ -130,7 +118,9 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.MvcPustok PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MultiItemStartupConfigurations />
 </Properties>

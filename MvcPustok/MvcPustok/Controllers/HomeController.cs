@@ -29,40 +29,5 @@ public class HomeController : Controller
         };
         return View(hv);
     }
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-
-    public async Task<IActionResult> AddBasket(int id)
-    {
-        List<BasketCookiesViewModel> basketCookiesViewModels = null;
-
-        Book book = _context.Books.FirstOrDefault(x => x.Id == id);
-
-        if (HttpContext.Request.Cookies["Courses"] != null)
-        {
-            basketCookiesViewModels = JsonConvert.DeserializeObject<List<BasketCookiesViewModel>>(HttpContext.Request.Cookies["Courses"]);
-        }
-        else
-        {
-            basketCookiesViewModels = new List<BasketCookiesViewModel>();
-        }
-        var existsCooki = basketCookiesViewModels.FirstOrDefault(x => x.BookId == id);
-        if (existsCooki != null)
-        {
-            existsCooki.Count++;
-        }
-        else
-        {
-            BasketCookiesViewModel basket = new BasketCookiesViewModel()
-            {
-                BookId = book.Id,
-                Count = 1,
-            };
-            basketCookiesViewModels.Add(basket);
-        }
-        HttpContext.Response.Cookies.Append("Courses", JsonConvert.SerializeObject(basketCookiesViewModels));
-
-        return RedirectToAction("index");
-    }
 }
 

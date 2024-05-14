@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -36,8 +38,6 @@ namespace MvcPustok.Controllers
 
             return View(vm);
         }
-
-
         [HttpPost]
         public async Task<IActionResult> Review(BookReview review)
         {
@@ -125,5 +125,65 @@ namespace MvcPustok.Controllers
                 .ToListAsync();
             return Json(reviews);
         }
+        public IActionResult AddToBasket(int bookId)
+        {
+            Book book = _context.Books.FirstOrDefault(x => x.Id == bookId && !x.IsDeleted);
+            if (book == null) return RedirectToAction("notfound", "error");
+
+            if (User.Identity.IsAuthenticated && User.IsInRole("member"))
+            {
+                string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+                BasketItem? basketItem = _context.BasketItems.FirstOrDefault(x => x.AppUserId == userId && x.BookId == bookId);
+
+                if (basketItem == null)
+                {
+                    basketItem = new BasketItem
+                    {
+                        AppUserId = userId,
+                        BookId = bookId,
+                        Count = 1
+                    };
+                    _context.BasketItems.Add(basketItem);
+                }
+                else basketItem.Count++;
+
+                _context.SaveChanges();
+            }
+            else
+            {
+                List<BasketCookiesViewModel> basketItems = new List<BasketCookiesViewModel>();
+
+                var cookieItem = Request.Cookies["basket"];
+
+                if (cookieItem != null)
+                {
+                    basketItems = JsonSerializer.Deserialize<List<BasketCookiesViewModel>>(cookieItem);
+                }
+
+                BasketCookiesViewModel item = basketItems.FirstOrDefault(x => x.BookId == bookId);
+
+                if (item == null)
+                {
+                    item = new BasketCookiesViewModel
+                    {
+                        BookId = bookId,
+                        Count = 1
+                    };
+                    basketItems.Add(item);
+                }
+                else
+                {
+                    item.Count++;
+                }
+
+                Response.Cookies.Append("basket", JsonSerializer.Serialize(basketItems));
+
+            }
+            return RedirectToAction("index", "home");
+
+        }
+
+
     }
 }
