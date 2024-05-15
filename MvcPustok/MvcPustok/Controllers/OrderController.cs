@@ -74,7 +74,6 @@ namespace MvcPustok.Controllers
             _context.Orders.Add(order);
             _context.SaveChanges();
 
-
             return RedirectToAction("profile", "account", new { tab = "orders"});
         }
         private BasketViewModel getBasket()

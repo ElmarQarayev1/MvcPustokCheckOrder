@@ -18,9 +18,10 @@
             <tr>
                 <td>@orderItem.Book.Name</td>
                 <td>@orderItem.Count</td>
-                <td>@orderItem.SalePrice</td>
-                <td>@orderItem.Count * @orderItem.SalePrice</td>
+                <td>@(orderItem.SalePrice - (orderItem.SalePrice * (orderItem.DiscountPercent / 100)))</td>
+                <td>@(orderItem.Count * (orderItem.SalePrice - (orderItem.SalePrice * (orderItem.DiscountPercent / 100))))</td>
             </tr>
         }
     </tbody>
+
 </table>
