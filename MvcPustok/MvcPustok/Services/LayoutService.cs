@@ -75,7 +75,6 @@ namespace MvcPustok.Services
                             };
                             vm.Items.Add(item);
                         }
-
                     }
 
                     vm.TotalPrice = vm.Items.Sum(x => x.Count * x.BookPrice);

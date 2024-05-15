@@ -134,19 +134,19 @@ namespace MvcPustok.Controllers
             {
                 string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-                BasketItem? basketItem = _context.BasketItems.FirstOrDefault(x => x.AppUserId == userId && x.BookId == bookId);
+                BasketItem? item = _context.BasketItems.FirstOrDefault(x => x.AppUserId == userId && x.BookId == bookId);
 
-                if (basketItem == null)
+                if (item == null)
                 {
-                    basketItem = new BasketItem
+                    item = new BasketItem
                     {
                         AppUserId = userId,
                         BookId = bookId,
                         Count = 1
                     };
-                    _context.BasketItems.Add(basketItem);
+                    _context.BasketItems.Add(item);
                 }
-                else basketItem.Count++;
+                else item.Count++;
 
                 _context.SaveChanges();
             }
@@ -160,8 +160,8 @@ namespace MvcPustok.Controllers
                 {
                     basketItems = JsonSerializer.Deserialize<List<BasketCookiesViewModel>>(cookieItem);
                 }
-
-                BasketCookiesViewModel item = basketItems.FirstOrDefault(x => x.BookId == bookId);
+                //basketcookiesviewmodel
+                var item = basketItems.FirstOrDefault(x => x.BookId == bookId);
 
                 if (item == null)
                 {
