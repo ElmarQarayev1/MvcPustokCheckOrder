@@ -267,12 +267,11 @@
                                                                 </a>
                                                             </h3>
                                                             <p class="price"><span class="qty">@item.Count ×</span> £@item.BookPrice.ToString("0.00")</p>
-                                                            <button class="cross-btn"><i class="fas fa-times"></i></button>
+                                                            <a asp-action="delete" asp-controller="order" asp-route-bookId="@item.BookId" class="btn"><i class="fas fa-times"></i></a>
+
                                                         </div>
                                                     </div>
-
                                                 }
-
                                             </div>
                                             <div class=" single-cart-block ">
                                                 <div class="btn-block">

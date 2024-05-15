@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Text.Json;
 using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace MvcPustok.Controllers
 {
@@ -131,6 +132,41 @@ namespace MvcPustok.Controllers
             }
             return vm;
         }
+        public IActionResult Delete(int bookId)
+        {
+            if (User.Identity.IsAuthenticated && User.IsInRole("member"))
+            {
+                var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+               
+                var basketItem = _context.BasketItems.FirstOrDefault(x => x.AppUserId == userId && x.BookId == bookId);
+                if (basketItem != null)
+                {
+                    _context.BasketItems.Remove(basketItem);
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {  
+                var cookieBasket = Request.Cookies["basket"];
+
+                if (cookieBasket != null)
+                {
+                    List<BasketCookiesViewModel> cookieItemsVM = JsonSerializer.Deserialize<List<BasketCookiesViewModel>>(cookieBasket);
+
+                    var itemToRemove = cookieItemsVM.FirstOrDefault(x => x.BookId == bookId);
+                    if (itemToRemove != null)
+                    {
+                        cookieItemsVM.Remove(itemToRemove);
+
+                        var updatedCookieValue = JsonSerializer.Serialize(cookieItemsVM);
+                        Response.Cookies.Append("basket", updatedCookieValue);
+                    }
+                }
+            }
+            return RedirectToAction("index", "home");
+        }
+
         [Authorize(Roles = "member")]
         public IActionResult Details(int id)
         {
