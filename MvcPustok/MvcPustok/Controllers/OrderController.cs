@@ -74,7 +74,6 @@ namespace MvcPustok.Controllers
             _context.Orders.Add(order);
             _context.SaveChanges();
 
-            TempData["OrderId"] = order.Id;
 
             return RedirectToAction("profile", "account", new { tab = "orders"});
         }
@@ -131,7 +130,6 @@ namespace MvcPustok.Controllers
                     vm.TotalPrice = vm.Items.Sum(x => x.Count * x.BookPrice);
                 }
             }
-
             return vm;
         }
         [Authorize(Roles = "member")]

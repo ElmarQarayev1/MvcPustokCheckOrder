@@ -1,6 +1,4 @@
-﻿@{
-    Layout = null;
-}
+﻿
 @model Order
 
 <h2>Order Details</h2>
@@ -21,7 +19,7 @@
                 <td>@orderItem.Book.Name</td>
                 <td>@orderItem.Count</td>
                 <td>@orderItem.SalePrice</td>
-                <td>@(orderItem.Count * orderItem.SalePrice)</td>
+                <td>@orderItem.Count * @orderItem.SalePrice</td>
             </tr>
         }
     </tbody>

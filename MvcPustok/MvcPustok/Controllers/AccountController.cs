@@ -121,23 +121,13 @@ namespace MvcPustok.Controllers
                     FullName = user.FullName,
                     UserName = user.UserName,
                     Email = user.Email
-                }
-            };
-            if (TempData["OrderId"] != null)
-            {
-                int orderId = (int)TempData["OrderId"];
-
-                Order? order = _context.Orders
+                },
+                Orders = _context.Orders
                     .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Book)
-                    .FirstOrDefault(o => o.Id == orderId);
-
-                if (order != null)
-                {
-                    profileViewModel.Orders.Add(order);
-                }
-            }
-
+                    .Where(o => o.AppUserId == user.Id)
+                    .ToList()
+            };
             ViewBag.Tab = tab;
             return View(profileViewModel);
         }
