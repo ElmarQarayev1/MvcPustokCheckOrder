@@ -8,5 +8,3 @@ namespace MvcPustok.ViewModels
         public decimal TotalPrice { get; set; }
     }
 }
-
-

@@ -17,6 +17,12 @@ namespace MvcPustok.Models
         public decimal DiscountPercent { get; set; }
         public Order? Order { get; set; }
         public Book? Book { get; set; }
+
+        public decimal CalculateTotalPrice()
+        {
+            decimal discountedPrice = SalePrice - (SalePrice * (DiscountPercent / 100));
+            return discountedPrice * Count;
+        }
     }
 }
 

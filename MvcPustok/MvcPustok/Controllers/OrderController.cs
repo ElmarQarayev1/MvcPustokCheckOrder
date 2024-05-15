@@ -10,6 +10,7 @@ using MvcPustok.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace MvcPustok.Controllers
 {
@@ -73,8 +74,9 @@ namespace MvcPustok.Controllers
             _context.Orders.Add(order);
             _context.SaveChanges();
 
+            TempData["OrderId"] = order.Id;
 
-            return RedirectToAction("profile", "account", new { tab = "orders" });
+            return RedirectToAction("profile", "account", new { tab = "orders"});
         }
         private BasketViewModel getBasket()
         {
@@ -106,7 +108,7 @@ namespace MvcPustok.Controllers
 
                 if (cookieBasket != null)
                 {
-                    List<BasketCookiesViewModel> cookieItemViewModel = JsonSerializer.Deserialize<List<BasketCookiesViewModel>>(cookieBasket);
+                    List<BasketCookiesViewModel> cookieItemViewModel = System.Text.Json.JsonSerializer.Deserialize<List<BasketCookiesViewModel>>(cookieBasket);
                     ;
                     foreach (var cookieItem in cookieItemViewModel)
                     {
@@ -132,6 +134,22 @@ namespace MvcPustok.Controllers
 
             return vm;
         }
+        [Authorize(Roles = "member")]
+        public IActionResult Details(int id)
+        {
+
+            var order = _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Book)
+                .FirstOrDefault(o => o.Id == id);
+
+            if (order == null)
+            {
+                return RedirectToAction("notfound", "error");
+            }
+            return View(order);
+        }
+
         //private List<OrderBasketItemViewModel> getOrderBasket(string userId)
         //{
 

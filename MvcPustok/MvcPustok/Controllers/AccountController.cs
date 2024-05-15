@@ -3,6 +3,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MvcPustok.Data;
 using MvcPustok.Models;
 using MvcPustok.ViewModels;
 
@@ -10,11 +12,13 @@ namespace MvcPustok.Controllers
 {
 	public class AccountController:Controller
 	{
+        private readonly AppDbContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
-        public AccountController(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager)
+        public AccountController(AppDbContext context,UserManager<AppUser> userManager,SignInManager<AppUser> signInManager)
 		{
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -97,26 +101,43 @@ namespace MvcPustok.Controllers
             return RedirectToAction("index", "home");
         }
         [Authorize(Roles = "member")]
-        public async Task<IActionResult> Profile(string tab="dashboard")
+        public async Task<IActionResult> Profile(string tab = "dashboard")
         {
             if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("login", "account");
             }
+
             AppUser? user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
                 return RedirectToAction("login", "account");
             }
+
             ProfileViewModel profileViewModel = new ProfileViewModel()
             {
                 ProfileEditView = new ProfileEditViewModel()
                 {
-                    FullName=user.FullName,
-                    UserName=user.UserName,
-                    Email=user.Email
+                    FullName = user.FullName,
+                    UserName = user.UserName,
+                    Email = user.Email
                 }
             };
+            if (TempData["OrderId"] != null)
+            {
+                int orderId = (int)TempData["OrderId"];
+
+                Order? order = _context.Orders
+                    .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Book)
+                    .FirstOrDefault(o => o.Id == orderId);
+
+                if (order != null)
+                {
+                    profileViewModel.Orders.Add(order);
+                }
+            }
+
             ViewBag.Tab = tab;
             return View(profileViewModel);
         }
@@ -185,6 +206,22 @@ namespace MvcPustok.Controllers
             TempData["ToastType"] = "success";
             return View(profileViewModel);
         }
+        [Authorize(Roles = "member")]
+        public IActionResult OrderDetails(int id)
+        {
+            
+            var order = _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Book)
+                .FirstOrDefault(o => o.Id == id);
+
+            if (order == null)
+            {
+                return RedirectToAction("notfound","error"); 
+            }
+            return View(order);
+        }
+
 
     }
 }
