@@ -62,6 +62,7 @@ namespace MvcPustok.Controllers
                 Note = orderviewmodel.Note,
                 Status = Models.Enum.OrderStatus.Pending
             };
+            var basketItems = _context.BasketItems.Include(x => x.Book).Where(x => x.AppUserId == user.Id).ToList();
 
             order.OrderItems = _context.BasketItems.Include(x => x.Book).Where(x => x.AppUserId == user.Id).Select(x => new OrderItem
             {
@@ -73,6 +74,7 @@ namespace MvcPustok.Controllers
             }).ToList();
 
             _context.Orders.Add(order);
+            _context.BasketItems.RemoveRange(basketItems);
             _context.SaveChanges();
 
             return RedirectToAction("profile", "account", new { tab = "orders"});
